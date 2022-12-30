@@ -28,13 +28,44 @@ let fruits = JSON.parse(fruitsJSON);
 // отрисовка карточек
 const display = () => {
   // TODO: очищаем fruitsList от вложенных элементов,
+  fruitsList.innerHTML = '';
   // чтобы заполнить актуальными данными из fruits
 
   for (let i = 0; i < fruits.length; i++) {
     // TODO: формируем новый элемент <li> при помощи document.createElement,
     // и добавляем в конец списка fruitsList при помощи document.appendChild
+    let fruitData = document.createElement('li');
+    let fruitColor = '';
+    switch (fruits[i]['color']) {
+      case 'фиолетовый':
+        fruitColor = 'fruit_violet';
+        break;
+      case 'зеленый':
+        fruitColor = 'fruit_green';
+        break;
+      case 'розово-красный':
+        fruitColor = 'fruit_carmazin';
+        break;
+      case 'желтый':
+        fruitColor = 'fruit_yellow';
+        break;
+      case 'светло-коричневый':
+        fruitColor = 'fruit_lightbrown';
+        break;
+      default:
+    }
+    fruitData.className = `fruit__item ${fruitColor}`;
+
+    fruitData.innerHTML = `<div class="fruit__info">
+                                <div>index: ${i}</div>
+                                <div>color: ${fruits[i]['color']}</div>
+                                <div>weight: ${fruits[i]['weight']}</div>
+                                <div>fruit: ${fruits[i]['kind']}</div>
+                            </div>`;
+    fruitsList.appendChild(fruitData);
   }
 };
+
 
 // первая отрисовка карточек
 display();
@@ -53,7 +84,11 @@ const shuffleFruits = () => {
   // ATTENTION: сейчас при клике вы запустите бесконечный цикл и браузер зависнет
   while (fruits.length > 0) {
     // TODO: допишите функцию перемешивания массива
-    //
+
+    let refresh = getRandomInt(0, fruits.length - 1);
+    result.push(fruits[refresh]);
+    fruits.splice(refresh, 1);
+
     // Подсказка: находим случайный элемент из fruits, используя getRandomInt
     // вырезаем его из fruits и вставляем в result.
     // ex.: [1, 2, 3], [] => [1, 3], [2] => [3], [2, 1] => [], [2, 1, 3]
@@ -74,6 +109,7 @@ shuffleButton.addEventListener('click', () => {
 const filterFruits = () => {
   fruits.filter((item) => {
     // TODO: допишите функцию
+
   });
 };
 
@@ -89,6 +125,7 @@ let sortTime = '-'; // инициализация состояния време�
 
 const comparationColor = (a, b) => {
   // TODO: допишите функцию сравнения двух элементов по цвету
+  return a.color.length >= b.color.length ? true : false;
 };
 
 const sortAPI = {
@@ -98,6 +135,12 @@ const sortAPI = {
 
   quickSort(arr, comparation) {
     // TODO: допишите функцию быстрой сортировки
+    left = comparation.a;
+    right = comparation.b;
+
+    quickFruitSort(arr, left, right);
+
+
   },
 
   // выполняет сортировку и производит замер времени
@@ -106,8 +149,9 @@ const sortAPI = {
     sort(arr, comparation);
     const end = new Date().getTime();
     sortTime = `${end - start} ms`;
-  },
-};
+  }
+};;
+
 
 // инициализация полей
 sortKindLabel.textContent = sortKind;

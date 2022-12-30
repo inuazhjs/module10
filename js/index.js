@@ -174,5 +174,14 @@ sortActionButton.addEventListener('click', () => {
 addActionButton.addEventListener('click', () => {
   // TODO: создание и добавление нового фрукта в массив fruits
   // необходимые значения берем из kindInput, colorInput, weightInput
-  display();
+  if ((kindInput.value === '') || (weightInput.value === '') || (colorInput.value === '')) {
+    alert('Не заполнено одно из полей')
+  } else {
+    fruits.push({
+      "kind": kindInput.value,
+      "color": colorInput.value,
+      "weight": weightInput.value
+    })
+    display();
+  }
 });

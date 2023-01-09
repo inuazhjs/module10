@@ -107,10 +107,19 @@ shuffleButton.addEventListener('click', () => {
 
 // фильтрация массива
 const filterFruits = () => {
-  fruits.filter((item) => {
-    // TODO: допишите функцию
-
-  });
+  let min = parseInt(document.querySelector(".minweight__input").value);
+  let max = parseInt(document.querySelector(".maxweight__input").value);
+  if (!isNaN(min) && !isNaN(min) && min <= max) {
+    fruits = JSON.parse(fruitsJSON);
+    fruits = fruits.filter((fruit) => {
+      if (fruit.weight >= min && fruit.weight <= max) {
+        return fruit;
+      }
+    });
+  } else {
+    divError('minimum weight/maximum weight');
+  }
+  return fruits;
 };
 
 filterButton.addEventListener('click', () => {
